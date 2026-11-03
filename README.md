@@ -1,4 +1,4 @@
-![MeshCSC banner](docs/images/meshcsc-banner.jpg)
+![MeshCSC banner](docs/images/meshcsc-banner-v2.jpg)
 
 # MeshCSC — Mesh Compact Semantic Codebook
 
