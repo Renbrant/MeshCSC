@@ -1,34 +1,5 @@
 {
-  "format_version": 1,
-  "dictionary_version": "2.0.0",
-  "language": {
-    "name": "English",
-    "tag": "en"
-  },
-  "normalization": {
-    "lookup_words": "lowercase_ascii",
-    "decoded_words": "lowercase",
-    "code_tokens": "case_sensitive"
-  },
-  "selection": {
-    "frequency_ranked_terms": 3500,
-    "curated_mesh_sar_terms": 250,
-    "total_entries": 3750,
-    "method": "Top 3,500 unique lowercased English word forms from the cited wordfreq export, plus 250 curated mesh, emergency, SAR, navigation, and communications terms. Highest-frequency entries receive the shortest codes."
-  },
-  "provenance": {
-    "frequency_source": "aparrish/wordfreq-en-25000, wordfreq-en-25000-log.json",
-    "source_url": "https://github.com/aparrish/wordfreq-en-25000/blob/main/wordfreq-en-25000-log.json",
-    "source_blob_sha": "704a4b856e2156264bbec3f2346099f1b79de5b2",
-    "upstream": "The export is derived from the wordfreq project; its exact upstream data version is not stated.",
-    "attribution": "Frequency export: https://github.com/aparrish/wordfreq-en-25000. Upstream project: Robyn Speer, rspeer/wordfreq; see https://github.com/rspeer/wordfreq for the project citation, attribution, and source-specific terms. Upstream sources include Google Books Ngrams, Leeds Internet Corpus, Wikipedia, ParaCrawl, OpenSubtitles 2018, SUBTLEX, NewsCrawl, GlobalVoices, OSCAR, Twitter, and Reddit. SUBTLEX data authors include Marc Brysbaert et al.; OpenSubtitles 2018 attribution is retained.",
-    "data_license": "CC BY-SA 4.0",
-    "data_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "export_publisher": "aparrish/wordfreq-en-25000",
-    "export_version": "Not specified by the export",
-    "upstream_project_citation": "Robyn Speer (2022), rspeer/wordfreq v3.0.2, https://doi.org/10.5281/zenodo.7199437",
-    "upstream_snapshot_note": "The wordfreq project documents its frequency data as a snapshot through about 2021; the export does not identify its exact build."
-  },
+  "wire_id": "E",
   "word_to_code": {
     "the": "a",
     "of": "b",
