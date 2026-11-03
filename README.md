@@ -26,6 +26,20 @@ The ID is globally unique to a language and an immutable dictionary mapping. Do 
 
 Each dictionary JSON stores its assigned `wire_id`. Keep this registry table in sync when adding another language or version. The one-byte header adds one byte to each encoded message and counts toward the radio payload limit.
 
+## Examples
+
+These examples use lowercase text whose every word is in the English dictionary. The transmitted payload includes the one-character `E` wire ID and spaces between code tokens; there is no separator after the ID. Character counts include spaces and the wire ID.
+
+| Original phrase | Transmitted payload | Original chars | Payload chars | Reduction |
+|---|---|---:|---:|---:|
+| `gps signal lost need assistance` | `E5A LJ fu a4 Nh` | 31 | 15 | 16 (51.6%) |
+| `repeater battery low send status` | `E4x VY gT lG u7` | 32 | 15 | 17 (53.1%) |
+| `water and food needed at shelter` | `Edo d eW kH v 7S` | 32 | 16 | 16 (50.0%) |
+| `storm warning evacuate now` | `EKm Oh 7n av` | 26 | 12 | 14 (53.8%) |
+| `coordinates and location are unknown` | `E5C d wE s Qt` | 36 | 13 | 23 (63.9%) |
+
+Reduction is calculated as `(original characters − payload characters) ÷ original characters`. These examples do not include punctuation, unknown-word escaping, or radio framing beyond the one-byte wire ID.
+
 ## Case and decoding rules
 
 Normalize source words to lowercase before lookup. Decoding returns lowercase words, so original capitalization is not preserved.
