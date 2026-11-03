@@ -1,3 +1,5 @@
+![MeshCSC banner](docs/images/meshcsc-banner.jpg)
+
 # MeshCSC — Mesh Compact Semantic Codebook
 
 MeshCSC is the shared word-to-code codebook for mesh communications. This repository stores dictionary data; each developer implements the encoder and decoder for their own software.
