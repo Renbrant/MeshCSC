@@ -28,17 +28,17 @@ Each dictionary JSON stores its assigned `wire_id`. Keep this registry table in 
 
 ## Examples
 
-These examples use lowercase text whose every word is in the English dictionary. The transmitted payload includes the one-character `E` wire ID and spaces between code tokens; there is no separator after the ID. Character counts include spaces and the wire ID.
+These everyday English sentences show the wire payload produced by the current dictionary. The first sentence is a natural English version of the example “Bom dia…”. Inputs are normalized to lowercase before lookup; decoded words are lowercase, so capitalization is not preserved. Punctuation stays attached to its token in these examples.
 
 | Original phrase | Transmitted payload | Original chars | Payload chars | Reduction |
 |---|---|---:|---:|---:|
-| `gps signal lost need assistance` | `E5A LJ fu a4 Nh` | 31 | 15 | 16 (51.6%) |
-| `repeater battery low send status` | `E4x VY gT lG u7` | 32 | 15 | 17 (53.1%) |
-| `water and food needed at shelter` | `Edo d eW kH v 7S` | 32 | 16 | 16 (50.0%) |
-| `storm warning evacuate now` | `EKm Oh 7n av` | 26 | 12 | 14 (53.8%) |
-| `coordinates and location are unknown` | `E5C d wE s Qt` | 36 | 13 | 23 (63.9%) |
+| `Good morning, did you watch the game today? I could barely stay in my chair. I almost had a heart attack.` | `EaA gJ, a3 k hc a ch dn? g aI Ys hb f A HN. g fp ab e gE nA.` | 105 | 60 | 45 (42.9%) |
+| `I am running a little late, but I will be there in about ten minutes.` | `Eg bM kc e bY f1, z g N p ae f Q nR gI.` | 69 | 39 | 30 (43.5%) |
+| `Can you pick up some milk and bread on your way home?` | `EM k ph R at IM d Ud m K a0 b4?` | 53 | 31 | 22 (41.5%) |
+| `I left my keys on the kitchen table, and now I cannot find them.` | `Eg cC A 0Z m a KS mn, d av g lR b2 au.` | 64 | 38 | 26 (40.6%) |
+| `We had a great time at dinner last night, and the food was really good.` | `EI ab e bx ah v BR by cG, d a eW o be aA.` | 71 | 41 | 30 (42.3%) |
 
-Reduction is calculated as `(original characters − payload characters) ÷ original characters`. These examples do not include punctuation, unknown-word escaping, or radio framing beyond the one-byte wire ID.
+Counts include spaces, punctuation, and the one-character `E` wire ID. The ID is attached to the first code with no separator. Reduction is calculated as `(original characters − payload characters) ÷ original characters`. Every word in these examples is present in the English dictionary.
 
 ## Case and decoding rules
 
