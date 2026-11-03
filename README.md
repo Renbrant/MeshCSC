@@ -8,6 +8,10 @@ The current English dictionary is [`dictionaries/english.json`](https://raw.gith
 
 The selection contains 3,500 high-frequency English word forms and 250 curated mesh, radio, emergency, search-and-rescue, navigation, and communications terms. The most frequent words receive the shortest codes. Codes are unique, 1–2 ASCII letters or digits, and no code consists only of digits.
 
+## Spanish, Portuguese and German dictionaries
+
+The Spanish, Portuguese, and German dictionaries each contain 3,750 unique word-to-code mappings. They are built from the 3,750 highest-ranked single-token alphabetic word forms in the corresponding 2016 frequency lists. The Portuguese dictionary uses the Brazilian Portuguese (`pt-BR`) list. Words are stored in lowercase, including native diacritics such as `ñ`, `ã`, `ç`, `ä`, and `ß`. The code values are unique within each dictionary and use the same one- or two-character ASCII code scheme as English.
+
 ## Message wire ID
 
 Every codebook-encoded message starts with exactly one ASCII alphanumeric byte, with no separator between the ID and the encoded body:
@@ -23,6 +27,9 @@ The ID is globally unique to a language and an immutable dictionary mapping. Do 
 | Wire ID | Language | Dictionary version | Status |
 |---|---|---:|---|
 | `E` | English (`en`) | `2.0.0` | Current |
+| `S` | Spanish (`es`) | `1.0.0` | Current |
+| `P` | Portuguese, Brazil (`pt-BR`) | `1.0.0` | Current |
+| `G` | German (`de`) | `1.0.0` | Current |
 
 Each dictionary JSON stores its assigned `wire_id`. Keep this registry table in sync when adding another language or version. The one-byte header adds one byte to each encoded message and counts toward the radio payload limit.
 
@@ -53,6 +60,10 @@ The 3,500-word frequency core was selected from the 25,000-word English `wordfre
 In the filtered wordfreq export, the 3,500 frequency-ranked terms account for an estimated 87.4% of token frequency; the full 3,750-entry dictionary accounts for about 87.6%. These figures describe that reference export, not actual mesh traffic.
 
 The frequency data is derived from `wordfreq` and is distributed under **CC BY-SA 4.0** where applicable. Attribution: Robyn Speer, [rspeer/wordfreq](https://github.com/rspeer/wordfreq), [project citation](https://doi.org/10.5281/zenodo.7199437). The upstream sources also require credit for SUBTLEX authors, including Marc Brysbaert et al., and attribution to OpenSubtitles 2018. See the upstream project’s [license and attribution notes](https://github.com/rspeer/wordfreq#license). The root `LICENSE` applies to repository-authored material; the English dataset follows the data license stated here.
+
+### Spanish, Portuguese and German frequency data
+
+These dictionaries use the 2016 Spanish (`es`), Brazilian Portuguese (`pt_br`), and German (`de`) frequency lists from [hermitdave/FrequencyWords](https://github.com/hermitdave/FrequencyWords), generated from the [OpenSubtitles 2016 corpus](https://opus.nlpl.eu/OpenSubtitles2016.php). Each list provides words ranked by corpus occurrence; entries were lowercased and non-alphabetic tokens excluded before taking the first 3,750 unique forms. The upstream repository states that its content is distributed under **CC BY-SA 4.0**. Attribution: Hermit Dave, [FrequencyWords](https://github.com/hermitdave/FrequencyWords); source corpus: OpenSubtitles 2016 via OPUS. The root `LICENSE` applies to repository-authored material; these frequency-derived dictionaries follow the data license stated here.
 
 ## Adding languages and versions
 
