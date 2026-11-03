@@ -1,6 +1,6 @@
-# MeshCSC Dictionaries
+# MeshCSC — Mesh Compact Semantic Codebook
 
-MeshCSC maintains shared word-to-code dictionary data for mesh-network projects. Each developer or project implements its own encoder and decoder using the language dictionary it needs.
+MeshCSC (Mesh Compact Semantic Codebook) is a shared word-to-code dictionary for mesh-network projects. This repository maintains the codebook data only; each developer or project implements its own encoder and decoder using the language dictionary it needs.
 
 ## English
 
