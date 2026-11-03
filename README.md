@@ -1,36 +1,51 @@
 # MeshCSC — Mesh Compact Semantic Codebook
 
-MeshCSC is the shared English word-to-code codebook for mesh communications. The repository stores the dictionary data; each developer builds an encoder and decoder for their own software.
+MeshCSC is the shared word-to-code codebook for mesh communications. This repository stores dictionary data; each developer implements the encoder and decoder for their own software.
 
 ## English dictionary
 
-The current release is [`dictionaries/english.json`](https://raw.githubusercontent.com/Renbrant/MeshCSC/main/dictionaries/english.json). It contains **3,750 entries**:
+The current English dictionary is [`dictionaries/english.json`](https://raw.githubusercontent.com/Renbrant/MeshCSC/main/dictionaries/english.json). It has 3,750 unique word-to-code mappings. Its JSON contains only the message wire ID and the mapping table.
 
-- 3,500 high-frequency English word forms selected from a broad frequency list
-- 250 curated mesh, radio, emergency, search-and-rescue, navigation, and communications terms
+The selection contains 3,500 high-frequency English word forms and 250 curated mesh, radio, emergency, search-and-rescue, navigation, and communications terms. The most frequent words receive the shortest codes. Codes are unique, 1–2 ASCII letters or digits, and no code consists only of digits.
 
-The most frequent terms receive the shortest codes. Every code is unique, 1–2 ASCII letters or digits, and no code consists only of digits.
+## Message wire ID
 
-## Case handling
+Every codebook-encoded message starts with exactly one ASCII alphanumeric byte, with no separator between the ID and the encoded body:
 
-Normalize source words to lowercase before lookup. The codebook keys are lowercase, and decoding returns lowercase words, so capitalization is intentionally not preserved.
+```text
+E<encoded-body>
+```
 
-Code tokens are case-sensitive. Do not lowercase encoded codes: upper- and lowercase letters distinguish different codes and are needed to support the full dictionary size. Implementations must also agree on tokenization and literal escaping.
+The receiver reads this first byte, selects the dictionary with the matching ID, removes the ID, and decodes the remaining body. IDs are case-sensitive. An unknown ID must not be decoded using a guessed dictionary.
 
-## Data format
+The ID is globally unique to a language and an immutable dictionary mapping. Do not reuse an ID, even after retiring a dictionary. Assign a new ID whenever the word-to-code mappings change. The ID alphabet is case-sensitive Base62 (`A-Z`, `a-z`, `0-9`), for 62 available dictionary/version IDs. If those are exhausted, the header format must be extended before adding more IDs.
 
-The JSON contains `format_version`, `dictionary_version`, language metadata, normalization rules, selection and attribution metadata, and a `word_to_code` mapping.
+| Wire ID | Language | Dictionary version | Status |
+|---|---|---:|---|
+| `E` | English (`en`) | `2.0.0` | Current |
 
-The frequency-ranked core is derived from the cited `wordfreq` English frequency export. The export does not state its exact upstream version. The wordfreq project documents its frequency data as a snapshot through about 2021; the export combines a broad mix of sources. Mesh and emergency terms were curated to supplement that broad English core; they are not claimed to be frequency-ranked.
+Each dictionary JSON stores its assigned `wire_id`. Keep this registry table in sync when adding another language or version. The one-byte header adds one byte to each encoded message and counts toward the radio payload limit.
 
-The English dictionary is released under **CC BY-SA 4.0** where applicable to the derived frequency data. The export and upstream project attribution, source notes, and license link are embedded in the JSON so they travel with the shared file. The root `LICENSE` applies to repository-authored material; the dictionary's embedded data license governs the English dataset.
+## Case and decoding rules
 
-## Adding languages and updating mappings
+Normalize source words to lowercase before lookup. Decoding returns lowercase words, so original capitalization is not preserved.
 
-Add one file per language under `dictionaries/`, such as `portuguese.json`. Keep each language's words separate and include its language tag and normalization rules.
+Wire IDs and encoded code tokens remain case-sensitive. Do not lowercase the ID or encoded body after transmission; uppercase and lowercase code characters represent different mappings. Implementations must agree on tokenization and literal escaping.
 
-The current English mapping is version `2.0.0`; this revision replaces the pre-release word selection and remaps codes. Pin a Git commit or release tag when building interoperable software. Future changes to existing mappings must be treated as breaking changes and documented.
+## Selection source and attribution
+
+The 3,500-word frequency core was selected from the 25,000-word English `wordfreq` export published at [aparrish/wordfreq-en-25000](https://github.com/aparrish/wordfreq-en-25000). The export does not state its exact upstream build. The `wordfreq` project documents a frequency snapshot through about 2021 and describes a broad mix of sources, including Google Books Ngrams, the Leeds Internet Corpus, Wikipedia, ParaCrawl, OpenSubtitles 2018, SUBTLEX, NewsCrawl, GlobalVoices, OSCAR, Twitter, and Reddit. The additional 250 terms were curated for mesh communications, emergency response, SAR, and navigation.
+
+In the filtered wordfreq export, the 3,500 frequency-ranked terms account for an estimated 87.4% of token frequency; the full 3,750-entry dictionary accounts for about 87.6%. These figures describe that reference export, not actual mesh traffic.
+
+The frequency data is derived from `wordfreq` and is distributed under **CC BY-SA 4.0** where applicable. Attribution: Robyn Speer, [rspeer/wordfreq](https://github.com/rspeer/wordfreq), [project citation](https://doi.org/10.5281/zenodo.7199437). The upstream sources also require credit for SUBTLEX authors, including Marc Brysbaert et al., and attribution to OpenSubtitles 2018. See the upstream project’s [license and attribution notes](https://github.com/rspeer/wordfreq#license). The root `LICENSE` applies to repository-authored material; the English dataset follows the data license stated here.
+
+## Adding languages and versions
+
+Add one JSON file per language under `dictionaries/`, such as `portuguese.json`. Give every language/version mapping a new, globally unique one-character wire ID and register the ID, language, version, and status in the table above. Keep old mappings and IDs available so archived messages remain decodable.
+
+Any change to an existing word-to-code mapping is a new dictionary version and requires a new wire ID. Pin the repository commit or release tag when building interoperable software.
 
 ## Scope
 
-This repository contains codebook data and its maintenance documentation only. It does not provide an encoder, decoder, protocol, firmware, or application.
+This repository contains codebook data and its maintenance documentation only. It does not provide an encoder, decoder, radio protocol, firmware, or application.
